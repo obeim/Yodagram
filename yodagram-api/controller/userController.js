@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import Post from "../models/Post.js";
 import asyncHandler from "express-async-handler";
 import generateToken from "../utlis/generateToken.js";
 
@@ -56,11 +57,16 @@ export const register = asyncHandler(async (req, res) => {
 export const getProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   if (user) {
+    const posts = await Post.find({ user: user._id });
     res.json({
       id: user._id,
       username: user.username,
       email: user.email,
+      bio: user.bio,
+      followers: user.followers,
+      following: user.following,
       profilePic: user.profilePic,
+      posts,
     });
   } else {
     res.status(401);
@@ -74,6 +80,7 @@ export const updateProfile = asyncHandler(async (req, res) => {
     user.username = req.body.username || user.username;
     user.email = req.body.email || user.email;
     user.profilePic = req.body.profilePic || user.profilePic;
+    user.bio = req.body.bio || user.bio;
     if (req.body.password) {
       user.password = req.body.password;
     }
@@ -84,10 +91,18 @@ export const updateProfile = asyncHandler(async (req, res) => {
       username: upadatedUser.username,
       email: upadatedUser.email,
       profilePic: upadatedUser.profilePic,
+      bio: upadatedUser.bio,
       message: "updated successfully",
     });
   } else {
     res.status(401);
     throw new Error("invalid user data");
   }
+});
+
+export const followUser = asyncHandler(async (req, res) => {
+  const followID = req.params.id;
+  const user = await User.findById(req.user._id);
+  const updatedUser = await user.follow(followID);
+  res.json(updatedUser);
 });

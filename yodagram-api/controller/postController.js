@@ -1,6 +1,6 @@
 import Post from "../models/Post.js";
 import asyncHandler from "express-async-handler";
-
+import User from "../models/User.js";
 // @desc create new post
 // @route POST /api/posts
 // @access public
@@ -21,7 +21,9 @@ export const createPost = asyncHandler(async (req, res) => {
 // @access public
 
 export const getPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find();
+  const user = await User.findById(req.user._id);
+  console.log(user.following);
+  const posts = await Post.find().where("user").in(user.following);
   res.json(posts);
 });
 
