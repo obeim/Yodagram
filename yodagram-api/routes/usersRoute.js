@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post("/login", login);
 router.post("/register", register);
-router.get("/profile", requireAuth, getProfile);
-router.put("/profile", requireAuth, updateProfile);
+router.get("/:id", requireAuth, getProfile);
+router.put("/:id", requireAuth, updateProfile);
 router.put("/follow/:id", requireAuth, followUser);
 export default router;
