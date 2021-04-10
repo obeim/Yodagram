@@ -5,8 +5,8 @@
   "main": "yodagram-api/server.js",
   "type": "module",
   "scripts": {
-    "start": "node yodagram-api/server",
-    "server": "nodemon yodagram-api/server"
+    "start": "node yodagram-api/server.js",
+    "server": "nodemon yodagram-api/server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

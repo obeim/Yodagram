@@ -1,6 +1,7 @@
 import Post from "../models/Post.js";
 import asyncHandler from "express-async-handler";
 import User from "../models/User.js";
+
 // @desc create new post
 // @route POST /api/posts
 // @access public
@@ -22,7 +23,7 @@ export const createPost = asyncHandler(async (req, res) => {
 
 export const getPosts = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  const posts = await Post.find().where("user").in(user.following).sort(-1);
+  const posts = await Post.find().where("user").in(user.following).sort("-1");
   res.json(posts);
 });
 
@@ -78,4 +79,35 @@ export const updatePost = asyncHandler(async (req, res) => {
   } else {
     throw new Error("post not found");
   }
+});
+
+export const addComment = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const comment = req.body.comment;
+  const { username, _id } = req.user;
+
+  const post = await Post.findById(id);
+  const newPost = await post.addComment({
+    user_name: username,
+    user_id: _id,
+    comment: comment,
+  });
+  res.json(newPost);
+});
+export const deleteComment = asyncHandler(async (req, res) => {
+  const postID = req.params.id;
+  const user = req.user._id;
+  const commentID = req.params.commentID;
+  const post = await Post.findById(postID);
+  const newPost = await post.deleteComment(commentID, user);
+  res.json(newPost);
+});
+export const updateComment = asyncHandler(async (req, res) => {
+  const postID = req.params.id;
+  const comment = req.body.comment;
+  const user = req.user._id;
+  const commentID = req.params.commentID;
+  const post = await Post.findById(postID);
+  const newPost = await post.updateComment(commentID, comment, user);
+  res.json(newPost);
 });
