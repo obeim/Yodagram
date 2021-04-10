@@ -22,8 +22,7 @@ export const createPost = asyncHandler(async (req, res) => {
 
 export const getPosts = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  console.log(user.following);
-  const posts = await Post.find().where("user").in(user.following);
+  const posts = await Post.find().where("user").in(user.following).sort(-1);
   res.json(posts);
 });
 
