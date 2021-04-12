@@ -130,3 +130,28 @@ export const followUser = asyncHandler(async (req, res) => {
   const updatedUser = await user.follow(followID);
   res.json(updatedUser);
 });
+
+// @desc search user
+// @route GET /api/users?
+// @access private
+
+export const search = asyncHandler(async (req, res) => {
+  const { key, page, limit = 10 } = req.query;
+
+  const users = await User.find({
+    username: {
+      $regex: key,
+
+      $options: "i",
+    },
+  })
+    .limit(10)
+    .skip((page - 1) * 10)
+    .exec();
+  const count = await User.countDocuments();
+  res.json({
+    users,
+    currentPage: page,
+    totalPages: count / 10,
+  });
+});
