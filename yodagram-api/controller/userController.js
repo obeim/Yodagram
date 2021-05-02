@@ -19,6 +19,7 @@ export const login = asyncHandler(async (req, res) => {
       email: user.email,
       profilePic: user.profilePic,
       token: generateToken(user._id),
+      following: user.following,
     });
   } else {
     res.status(401);
@@ -47,6 +48,7 @@ export const register = asyncHandler(async (req, res) => {
     birth,
     profilePic,
   });
+  user.follow(user._id);
   if (user) {
     res.status(201).json({
       _id: user._id,
@@ -125,10 +127,10 @@ export const updateProfile = asyncHandler(async (req, res) => {
 // @access private
 
 export const followUser = asyncHandler(async (req, res) => {
-  const followID = req.params.id;
+  const followID = req.body.followID;
   const user = await User.findById(req.user._id);
   const updatedUser = await user.follow(followID);
-  res.json(updatedUser);
+  res.status(200).json(updatedUser);
 });
 
 // @desc search user
@@ -146,12 +148,26 @@ export const search = asyncHandler(async (req, res) => {
     },
   })
     .limit(10)
-    .skip((page - 1) * 10)
+    .skip((page - 1) * limit)
     .exec();
   const count = await User.countDocuments();
   res.json({
     users,
     currentPage: page,
-    totalPages: count / 10,
+    totalPages: count / limit,
   });
+});
+
+export const getAvatar = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  res.json({
+    username: user.username,
+    profilePic: user.profilePic,
+  });
+});
+
+export const getSuggest = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+  res.json(users);
 });

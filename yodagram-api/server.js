@@ -8,12 +8,11 @@ import { errorHandler, notFound } from "./middlewares/errorMiddleware.js";
 import connectDB from "./config/db.js";
 dotenv.config();
 connectDB();
-
 const app = express();
 const __dirname = path.resolve();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
-app.use(express.static(path.join(__dirname, "/uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

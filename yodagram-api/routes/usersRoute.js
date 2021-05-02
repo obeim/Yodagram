@@ -1,7 +1,9 @@
 import express from "express";
 import {
   followUser,
+  getAvatar,
   getProfile,
+  getSuggest,
   login,
   register,
   search,
@@ -12,9 +14,11 @@ const router = express.Router();
 
 router.post("/login", login);
 router.post("/register", register);
+router.put("/follow", requireAuth, followUser);
+router.get("/suggest", requireAuth, getSuggest);
 router.get("/search", requireAuth, search);
 router.get("/:id", requireAuth, getProfile);
 router.put("/:id", requireAuth, updateProfile);
-router.put("/follow/:id", requireAuth, followUser);
+router.get("/avatar/:id", requireAuth, getAvatar);
 
 export default router;

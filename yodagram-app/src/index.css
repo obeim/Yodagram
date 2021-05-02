@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  @variants responsive {
+    .w-1000 {
+      width: 1000px;
+    }
+    .w-950 {
+      width: 950px;
+    }
+    .w-900 {
+      width: 900px;
+    }
+    .w-850 {
+      width: 850px;
+    }
+
+    .w-800 {
+      width: 800px;
+    }
+
+    .w-750 {
+      width: 750px;
+    }
+
+    .w-700 {
+      width: 700px;
+    }
+
+    .w-650 {
+      width: 650px;
+    }
+
+    .w-600 {
+      width: 600px;
+    }
+
+    .w-550 {
+      width: 550px;
+    }
+
+    .w-500 {
+      width: 500px;
+    }
+
+    .w-450 {
+      width: 450px;
+    }
+
+    .w-400 {
+      width: 400px;
+    }
+
+    .w-350 {
+      width: 350px;
+    }
+
+    .w-300 {
+      width: 300px;
+    }
+  }
+}

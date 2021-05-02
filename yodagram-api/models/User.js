@@ -50,8 +50,8 @@ userSchema.methods.follow = async function (id) {
     this.following = this.following.filter((followingID) => {
       return followingID.toString() !== id.toString();
     });
-    this.followers = user.followers = user.followers.filter(
-      (followerID) => followerID.toString() !== id.toString()
+    user.followers = user.followers = user.followers.filter(
+      (followerID) => followerID.toString() !== this._id.toString()
     );
   }
   await this.save();

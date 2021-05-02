@@ -1,7 +1,9 @@
 import Post from "../models/Post.js";
 import asyncHandler from "express-async-handler";
+import path from "path";
+import fs from "fs";
 import User from "../models/User.js";
-
+const __dirname = path.resolve();
 // @desc create new post
 // @route POST /api/posts
 // @access public
@@ -23,7 +25,11 @@ export const createPost = asyncHandler(async (req, res) => {
 
 export const getPosts = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  const posts = await Post.find().where("user").in(user.following).sort("-1");
+  const posts = await Post.find()
+    .where("user")
+    .in(user.following)
+    .sort({ createdAt: -1 });
+
   res.json(posts);
 });
 
@@ -53,6 +59,8 @@ export const deletePost = asyncHandler(async (req, res) => {
       throw new Error("not allowed to delete");
     }
     await post.remove();
+    fs.unlinkSync(path.join(__dirname, post.image));
+
     res.json({ message: "post removed successfully" });
   } else {
     throw new Error("post not found");
