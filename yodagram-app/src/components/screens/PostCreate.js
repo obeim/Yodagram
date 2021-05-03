@@ -9,16 +9,25 @@ const PostCreate = ({ history }) => {
   const [error, setError] = useState(null);
   const onChange = async (e) => {
     setPic(e.target.files[0]);
-    console.log(e.target);
     const formData = new FormData();
-    formData.append("image", e.target.files[0]);
-    const { data } = await axios.post("/api/upload", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log(data);
-    setImage(data);
+    const filetypes = /jpg|jpeg|png/;
+    if (e.target.files[0]) {
+      const fileType = filetypes.test(`image/${e.target.files[0].type}`);
+
+      if (fileType) {
+        formData.append("image", e.target.files[0]);
+        const { data } = await axios.post("/api/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log(data);
+        setImage(data);
+        setError(null);
+      } else {
+        setError("images only");
+      }
+    }
   };
   const onSubmit = (e) => {
     e.preventDefault();

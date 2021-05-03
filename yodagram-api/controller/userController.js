@@ -128,7 +128,7 @@ export const updateProfile = asyncHandler(async (req, res) => {
 
 export const followUser = asyncHandler(async (req, res) => {
   const followID = req.body.followID;
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id).select("-password");
   const updatedUser = await user.follow(followID);
   res.status(200).json(updatedUser);
 });
@@ -143,7 +143,6 @@ export const search = asyncHandler(async (req, res) => {
   const users = await User.find({
     username: {
       $regex: key,
-
       $options: "i",
     },
   })

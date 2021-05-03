@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useAuthDispatch } from "../context";
+import { useAuthDispatch, followUser } from "../context";
+import { Link } from "react-router-dom";
 const Suggest = ({ userInfo }) => {
   const [users, setUsers] = useState([]);
-  const [user, setUser] = useState({});
   const dispatch = useAuthDispatch();
 
   const fetchUsers = async () => {
@@ -16,29 +16,13 @@ const Suggest = ({ userInfo }) => {
       console.log(err);
     }
   };
-  const followUser = async (id) => {
-    dispatch({ type: "FOLLOW_REQUEST" });
-    try {
-      const { data } = await axios.put(
-        `/api/users/follow`,
-        { followID: id },
-        {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        }
-      );
-      setUser(data);
-      console.log(data);
-      dispatch({ type: "FOLLOW_SUCCESS", payload: data });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+
   useEffect(() => {
     fetchUsers();
   }, []);
   useEffect(() => {
     fetchUsers();
-  }, [user]);
+  }, [userInfo]);
   return (
     <div>
       {userInfo && users.length > 0 ? (
@@ -56,13 +40,18 @@ const Suggest = ({ userInfo }) => {
                       alt=''
                       className='ml-7 w-10 h-10 rounded-full inline-block object-cover'
                     />
-                    <span className='inline-block font-bold mx-6 text-gray-500'>
+                    <Link
+                      to={`/users/${user._id}`}
+                      className='inline-block font-bold mx-6 text-gray-500'
+                    >
                       {user.username}{" "}
-                    </span>
+                    </Link>
                   </h1>
                   <button
                     className='text-blue-500 outline-none border-none'
-                    onClick={() => followUser(user._id)}
+                    onClick={() =>
+                      followUser(dispatch, user._id, userInfo.token)
+                    }
                   >
                     {user.followers.indexOf(userInfo._id) === -1 ? (
                       <>follow</>

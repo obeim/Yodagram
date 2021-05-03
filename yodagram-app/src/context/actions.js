@@ -38,6 +38,22 @@ export const registerUser = async (dispatch, registerInfo) => {
     });
   }
 };
+export const followUser = async (dispatch, id, token) => {
+  dispatch({ type: "FOLLOW_REQUEST" });
+  try {
+    const { data } = await axios.put(
+      `/api/users/follow`,
+      { followID: id },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    console.log(data);
+    dispatch({ type: "FOLLOW_SUCCESS", payload: data });
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 export const logout = (dispatch) => {
   dispatch({ type: "LOGOUT" });

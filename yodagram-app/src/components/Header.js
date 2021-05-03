@@ -1,5 +1,5 @@
 import React from "react";
-import { AiFillHome, AiFillPlusSquare, AiOutlineSearch } from "react-icons/ai";
+import { AiFillHome, AiFillPlusSquare } from "react-icons/ai";
 import { GoPerson } from "react-icons/go";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { Link, NavLink } from "react-router-dom";
@@ -30,13 +30,17 @@ const Header = () => {
         {userInfo ? (
           <>
             {" "}
-            <form className='relative'>
+            <form
+              className='relative'
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+            >
               <input
                 type='search'
                 className='px-4 py-2 w-full  border rounded outline-none bg-gray-100 focus:border-gray-300'
                 placeholder='search'
               />
-              <AiOutlineSearch className='absolute top-3 right-3 cursor-pointer ' />
             </form>
             <ul className='flex items-center gap-10'>
               <li className='cursor-pointer hidden md:block rounded-full p-1 hover:bg-gray-200'>
@@ -66,7 +70,7 @@ const Header = () => {
                   id='menu'
                   className='border absolute shadow-lg rounded bg-white top-10 right-0 lg:left-0 w-32  hidden '
                 >
-                  <Link to='/users/:id'>
+                  <Link to={`/users/${userInfo._id}`}>
                     <li className='p-3 hover:bg-gray-200 flex items-center justify-evenly font-bold text-gray-700'>
                       <GoPerson className='inline text-xl ' /> profile
                     </li>

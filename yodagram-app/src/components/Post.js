@@ -41,7 +41,7 @@ const Post = ({ post, index, history }) => {
   return (
     <div className='border    xl:w-4/5 lg:w-4/5 w-full xl:m-5 lg:m-3 lg:my-10 my-2 rounded bg-white'>
       <div className='flex justify-between p-4 mx-auto items-center  border-b'>
-        <Link to='/' className='flex items-center gap-3'>
+        <Link to={`/users/${post.user}`} className='flex items-center gap-3'>
           <img
             src={avatar.profilePic}
             alt=''

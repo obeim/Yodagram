@@ -1,5 +1,5 @@
 import { AuthProvider, useAuthDispatch, useAuthState } from "./context";
-import { loginUser, registerUser, logout } from "./actions";
+import { loginUser, registerUser, logout, followUser } from "./actions";
 export {
   AuthProvider,
   useAuthDispatch,
@@ -7,4 +7,5 @@ export {
   loginUser,
   registerUser,
   logout,
+  followUser,
 };

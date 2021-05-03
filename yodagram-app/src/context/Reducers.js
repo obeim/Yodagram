@@ -61,7 +61,7 @@ export const AuthReducer = (initialState, action) => {
       return {
         ...initialState,
         posts: [
-          ...initialState.posts.filter((post) => post._id != action.payload),
+          ...initialState.posts.filter((post) => post._id !== action.payload),
         ],
       };
 
