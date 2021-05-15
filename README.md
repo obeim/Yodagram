@@ -7,4 +7,4 @@ first u have to install all dependencies run command : npm run installAll
  
    to run the app (run front and back) write command : npm run dev 
 
-   u should have : node ,mongodbCompass installed
+   u should have : node ,mongodb installed
