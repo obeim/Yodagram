@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { useAuthDispatch, useAuthState } from "../context";
+import { useAuthDispatch, useAuthState, followUser } from "../context";
 import axios from "axios";
 
 const Post = ({ post, index, history }) => {
@@ -62,14 +62,24 @@ const Post = ({ post, index, history }) => {
             id={`post${index}`}
             className='border absolute shadow-lg z-20 rounded bg-white top-5 lg:left-0 right-0 lg:left-0 w-32  hidden '
           >
-            {userInfo && userInfo._id === post.user && (
+            {userInfo && userInfo._id === post.user ? (
               <li
                 onClick={handleDelete}
                 className='p-3 hover:bg-gray-200 cursor-pointer flex items-center justify-evenly font-bold text-red-700'
               >
                 Delete
               </li>
+            ) : (
+              <li
+                onClick={() => {
+                  followUser(dispatch, post.user, userInfo.token);
+                }}
+                className='p-3 hover:bg-gray-200 cursor-pointer flex items-center justify-evenly font-bold text-blue-700'
+              >
+                unfollow
+              </li>
             )}
+
             <li
               onClick={() =>
                 document.querySelector(`#post${index}`).classList.add("hidden")

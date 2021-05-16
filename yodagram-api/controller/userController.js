@@ -71,7 +71,7 @@ export const register = asyncHandler(async (req, res) => {
 export const getProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   if (user) {
-    const posts = await Post.find({ user: user._id });
+    const posts = await Post.find({ user: user._id }).sort({ createdAt: -1 });
     res.json({
       _id: user._id,
       username: user.username,
