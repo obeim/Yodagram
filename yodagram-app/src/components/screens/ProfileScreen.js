@@ -43,7 +43,7 @@ const ProfileScreen = ({ history, match }) => {
             <span className='lg:text-4xl   md:text-2xl text-lg font-light	'>
               {user.username}
             </span>
-            {match.params.id === userInfo._id ? (
+            {userInfo && match.params.id === userInfo._id ? (
               <button className='border border-gray-400 px-2 py-1 w-f   mx-5  rounded font-semibold'>
                 Edit Profile
               </button>
@@ -52,7 +52,7 @@ const ProfileScreen = ({ history, match }) => {
                 onClick={followHandler}
                 className='border bg-blue-500 text-white px-2 py-1 lg:w-32 w-20   h-10 mx-5  rounded font-semibold'
               >
-                {userInfo.following &&
+                {userInfo &&
                 userInfo.following.indexOf(match.params.id) === -1 ? (
                   <span> follow</span>
                 ) : (
