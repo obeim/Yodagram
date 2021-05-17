@@ -1,6 +1,9 @@
 import path from "path";
 import express from "express";
 import multer from "multer";
+import fs from "fs";
+const __dirname = path.resolve();
+
 const router = express.Router();
 const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -32,10 +35,21 @@ const upload = multer({
   },
 });
 
-router.post("/", upload.single("image"), (req, res) => {
-  const imagePath = req.file.path.replace("\\", "/");
+router.post(
+  "/",
+  (req, res, next) => {
+    const dir = path.join(__dirname, "/uploads");
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+    next();
+  },
+  upload.single("image"),
+  (req, res) => {
+    const imagePath = req.file.path.replace("\\", "/");
 
-  res.send(`/${imagePath}`);
-});
+    res.send(`/${imagePath}`);
+  }
+);
 
 export default router;
