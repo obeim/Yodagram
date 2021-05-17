@@ -91,7 +91,7 @@ const ProfileScreen = ({ history, match }) => {
           user.posts.map((post) => (
             <Link
               key={post._id}
-              to={`/post/${post._id}`}
+              to={`/posts/${post._id}`}
               className='lg:w-80 lg:h-80 md:w-60 md:h-60 w-40 h-40 overflow-hidden  relative  cursor-pointer'
             >
               <img className='object-cover  w-full h-full' src={post.image} />

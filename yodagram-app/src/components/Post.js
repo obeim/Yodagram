@@ -91,7 +91,10 @@ const Post = ({ post, index, history }) => {
           </ul>
         </div>
       </div>
-      <img src={post.image} alt='' className='w-full max-h-full	min-h-96' />
+      <Link to={`/posts/${post._id}`}>
+        {" "}
+        <img src={post.image} alt='' className='w-full max-h-full	min-h-96' />
+      </Link>
       <div>
         <div className=' text-gray-600  mx-5 my-5 '>
           {post.info && (

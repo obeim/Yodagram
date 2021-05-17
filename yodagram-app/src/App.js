@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomeScreen from "./components/screens/HomeScreen";
 import ProfileScreen from "./components/screens/ProfileScreen";
+import PostScreen from "./components/screens/PostScreen";
 import { AuthProvider } from "./context/context";
 import LoginScreen from "./components/screens/LoginScreen";
 import RegisterScreen from "./components/screens/RegisterScreen";
@@ -19,6 +20,7 @@ const App = () => (
         <Route path='/login' component={LoginScreen} />
         <Route path='/register' component={RegisterScreen} />
         <Route path='/users/:id' component={ProfileScreen} />
+        <Route path='/posts/:id' component={PostScreen} />
         <Route path='/createpost' component={PostCreate} />
         <Route path='*' exact component={NotFound} />
       </Switch>

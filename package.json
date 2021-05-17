@@ -9,8 +9,7 @@
     "server": "nodemon yodagram-api/server.js",
     "client": "npm start --prefix yodagram-app",
     "clientInstall": "npm install --prefix yodagram-app",
-    "dev": "concurrently \"npm run server\" \"npm run client\" ",
-    "installAll": "concurrently \"npm install\" \"npm run clientInstall\" "
+    "dev": "concurrently \"npm run server\" \"npm run client\" "
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
