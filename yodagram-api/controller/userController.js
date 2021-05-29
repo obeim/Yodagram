@@ -167,6 +167,10 @@ export const getAvatar = asyncHandler(async (req, res) => {
 });
 
 export const getSuggest = asyncHandler(async (req, res) => {
-  const users = await User.find({});
+  const users = await User.find({})
+    .select("-password")
+    .where("followers")
+    .nin(req.user._id)
+    .limit(3);
   res.json(users);
 });

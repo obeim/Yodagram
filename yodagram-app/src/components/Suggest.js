@@ -32,7 +32,7 @@ const Suggest = ({ userInfo }) => {
               user._id !== userInfo._id && (
                 <div
                   key={user._id}
-                  className='my-3 mx-10 flex justify-around items-center'
+                  className='my-3 mx-10 flex justify-between items-center'
                 >
                   <h1 className=''>
                     <img

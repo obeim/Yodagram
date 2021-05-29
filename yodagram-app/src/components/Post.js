@@ -7,6 +7,7 @@ import axios from "axios";
 const Post = ({ post, index, history }) => {
   const [comment, setComment] = useState("");
   const [avatar, setAvatar] = useState({ username: "", profilePic: "" });
+  const [thisPost, setPost] = useState(post);
   const { userInfo } = useAuthState();
   const dispatch = useAuthDispatch();
   const getAvatar = async () => {
@@ -35,13 +36,33 @@ const Post = ({ post, index, history }) => {
       dispatch({ type: "POST_DELETE", payload: post._id });
     } catch (err) {}
   };
+  const handleAddComment = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { data } = await axios.post(
+        `/api/posts/${post._id}/comments`,
+        { comment },
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      console.log(data);
+      setPost(data);
+      setComment("");
+    } catch (err) {}
+  };
   useEffect(() => {
     getAvatar();
   }, []);
+
   return (
-    <div className='border    xl:w-4/5 lg:w-4/5 w-full xl:m-5 lg:m-3 lg:my-10 my-2 rounded bg-white'>
+    <div className='border   xl:w-4/5 lg:w-4/5 w-full xl:m-5 lg:m-3 lg:my-10 my-2 rounded bg-white'>
       <div className='flex justify-between p-4 mx-auto items-center  border-b'>
-        <Link to={`/users/${post.user}`} className='flex items-center gap-3'>
+        <Link
+          to={`/users/${thisPost.user}`}
+          className='flex items-center gap-3'
+        >
           <img
             src={avatar.profilePic}
             alt=''
@@ -91,33 +112,43 @@ const Post = ({ post, index, history }) => {
           </ul>
         </div>
       </div>
-      <Link to={`/posts/${post._id}`}>
+      <Link to={`/posts/${thisPost._id}`}>
         {" "}
-        <img src={post.image} alt='' className='w-full max-h-full	min-h-96' />
+        <img
+          src={thisPost.image}
+          alt=''
+          className='w-full max-h-full	min-h-96'
+        />
       </Link>
       <div>
         <div className=' text-gray-600  mx-5 my-5 '>
-          {post.info && (
+          {thisPost.info && (
             <p className='cursor-pointer  my-3  text-lg '>
               {" "}
               <span className='font-bold mx-2'>{avatar.username}</span>{" "}
               {post.info}
             </p>
           )}
-          {post.comments.length > 3 && (
+          {thisPost.comments.length > 3 && (
             <p className='cursor-pointer  my-3 mx-2 text-lg text-gray-400'>
-              View all {post.comments.length}
+              View all {thisPost.comments.length} comments
             </p>
           )}
-          {post.comments &&
-            post.comments.map((comment) => (
-              <div className='my-1 ' key={comment._id}>
-                <span className='font-bold mx-2'>{comment.user_name}</span>{" "}
-                {comment.comment}
-              </div>
-            ))}
+          {thisPost.comments &&
+            thisPost.comments.map(
+              (comment, index) =>
+                index < 3 && (
+                  <div className='my-1 ' key={comment._id}>
+                    <span className='font-bold mx-2'>{comment.user_name}</span>{" "}
+                    {comment.comment}
+                  </div>
+                )
+            )}
         </div>
-        <form className='border-t p-2 flex justify-around'>
+        <form
+          onSubmit={handleAddComment}
+          className='border-t p-2 flex justify-around'
+        >
           <textarea
             type='text'
             placeholder='Add a comment'

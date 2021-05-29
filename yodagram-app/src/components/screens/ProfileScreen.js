@@ -39,12 +39,12 @@ const ProfileScreen = ({ history, match }) => {
           className='rounded-full lg:w-48 lg:h-48 md:w-32 md:h-32  border object-cover w-24 h-24'
         />
         <div>
-          <div className='flex justify-center lg:text-lg text-sm'>
-            <span className='lg:text-4xl   md:text-2xl text-lg font-light	'>
+          <div className='flex justify-center lg:text-lg text-sm w-full'>
+            <span className='lg:text-4xl   md:text-2xl text-lg font-light	md:w-60 w-32'>
               {user.username}
             </span>
             {userInfo && match.params.id === userInfo._id ? (
-              <button className='border border-gray-400 px-2 py-1 w-f   mx-5  rounded font-semibold'>
+              <button className='border border-gray-400 px-2 py-1 w-full   mx-5  rounded font-semibold'>
                 Edit Profile
               </button>
             ) : (

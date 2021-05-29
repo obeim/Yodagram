@@ -60,7 +60,7 @@ const HomeScreen = ({ history }) => {
           )}
         </div>
         <div className='xl:col-span-2 hidden  xl:block '>
-          <div className='fixed right-0  my-5 z-10  xl:w-700   border-l '>
+          <div className='fixed right-0  my-5 z-10  xl:w-700   '>
             <div className='m-10 flex justify-around items-center'>
               <h1 className=''>
                 <img
