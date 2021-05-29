@@ -122,13 +122,12 @@ const Post = ({ post, index, history }) => {
       </Link>
       <div>
         <div className=' text-gray-600  mx-5 my-5 '>
-          {thisPost.info && (
-            <p className='cursor-pointer  my-3  text-lg '>
-              {" "}
-              <span className='font-bold mx-2'>{avatar.username}</span>{" "}
-              {post.info}
-            </p>
-          )}
+          <p className='cursor-pointer  my-3   '>
+            {" "}
+            <span className='font-bold mx-2'>{avatar.username} :</span>{" "}
+            {thisPost.info && post.info}
+          </p>
+
           {thisPost.comments.length > 3 && (
             <p className='cursor-pointer  my-3 mx-2 text-lg text-gray-400'>
               View all {thisPost.comments.length} comments
@@ -138,7 +137,7 @@ const Post = ({ post, index, history }) => {
             thisPost.comments.map(
               (comment, index) =>
                 index < 3 && (
-                  <div className='my-1 ' key={comment._id}>
+                  <div className='my-1 text-xs' key={comment._id}>
                     <span className='font-bold mx-2'>{comment.user_name}</span>{" "}
                     {comment.comment}
                   </div>
