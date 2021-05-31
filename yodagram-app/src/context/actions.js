@@ -55,16 +55,6 @@ export const followUser = async (dispatch, id, token) => {
   }
 };
 
-export const getAvatar = async (user, userInfo) => {
-  try {
-    const { data } = await axios.get(`/api/users/avatar/${user}`, {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
-    });
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
-};
 export const logout = (dispatch) => {
   dispatch({ type: "LOGOUT" });
   localStorage.removeItem("currentUser");

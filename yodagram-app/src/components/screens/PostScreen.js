@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useAuthState, useAuthDispatch, followUser } from "../../context";
+import { useAuthState, useAuthDispatch } from "../../context";
 import { BsThreeDots } from "react-icons/bs";
-import Spinner from "../Spinner.js";
+import { AiFillDelete } from "react-icons/ai";
+import { Link } from "react-router-dom";
 const PostScreen = ({ match, history }) => {
   const [post, setPost] = useState(null);
   const [error, setError] = useState(null);
@@ -12,11 +13,19 @@ const PostScreen = ({ match, history }) => {
   const dispatch = useAuthDispatch();
 
   useEffect(() => {
+    if (!userInfo) {
+      history.push("/login");
+    }
     fetchPost();
   }, []);
   useEffect(() => {
     getAvatar();
   }, [post]);
+  useEffect(() => {
+    if (!userInfo) {
+      history.push("/login");
+    }
+  }, [userInfo]);
   const handleClick = () => {
     const menu = document.querySelector("#post");
     if (menu.classList.contains("hidden")) {
@@ -35,6 +44,17 @@ const PostScreen = ({ match, history }) => {
     } catch (err) {
       history.push("/");
     }
+  };
+  const onDelete = async (id) => {
+    try {
+      const { data } = await axios.delete(
+        `/api/posts/${post._id}/comments/${id}`,
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      setPost(data);
+    } catch (err) {}
   };
   const getAvatar = async () => {
     try {
@@ -95,13 +115,12 @@ const PostScreen = ({ match, history }) => {
       <div
         onClick={closeImage}
         id='imagebg'
-        className=' w-full bg-black fixed opacity-70 hidden top-0 h-full z-20 '
+        className=' w-full bg-black cursor-pointer fixed opacity-70 hidden top-0 h-full z-20 '
       ></div>
       <img
         id='image'
         src={post && post.image}
-        alt=''
-        className='w-8/12 h-8/12 left-40 mt-10 absolute hidden z-30 top-10'
+        className='md:w-8/12 md:h-8/12 w-10/12 h-10/12 md:left-40 left-10  mt-10 absolute hidden z-30 top-10'
       />
       <div className='container mx-auto  my-5'>
         {post && (
@@ -113,18 +132,17 @@ const PostScreen = ({ match, history }) => {
               <img
                 onClick={showImage}
                 src={post && `${post.image}`}
-                alt=''
-                className='md:w-500 md:h-500 h-full md:w-full object-cover'
+                className='md:w-500 md:h-500 cursor-pointer h-full md:w-full object-cover'
                 style={{ maxHeight: "500px" }}
               />
-              {post && post.user === userInfo._id && (
+              {post && userInfo && post.user === userInfo._id && (
                 <BsThreeDots
                   onClick={handleClick}
                   className='absolute top-2 left-3 cursor-pointer bg-white rounded-full w-10'
                 />
               )}
               <ul
-                id={`post`}
+                id='post'
                 className='border absolute shadow-lg z-20 rounded bg-white top-5   w-24  hidden '
                 style={{ left: -20 }}
               >
@@ -149,15 +167,17 @@ const PostScreen = ({ match, history }) => {
             </div>
             <div className='border  relative' style={{ maxHeight: "500px" }}>
               <h1 className='   border-b my-2 p-2 absolute w-full'>
-                <img
-                  src={avatar && avatar.profilePic}
-                  alt=''
-                  className='w-8 h-8 rounded-full inline-block'
-                />
-                <span className='text-sm font-semibold text-gray-600'>
-                  {" "}
-                  {avatar.username}
-                </span>{" "}
+                <Link to={`/users/${post.user}`}>
+                  <img
+                    src={avatar && avatar.profilePic}
+                    alt=''
+                    className='w-8 h-8 rounded-full inline-block'
+                  />
+                  <span className='text-sm font-semibold text-gray-600'>
+                    {" "}
+                    {avatar.username}
+                  </span>{" "}
+                </Link>
                 <span className='text-xs text-gray-600'>{post.info}</span>
               </h1>
 
@@ -165,19 +185,21 @@ const PostScreen = ({ match, history }) => {
                 className='mt-20  overflow-y-scroll scrollbar'
                 style={{ maxHeight: "300px", height: "300px" }}
               >
-                {post.comments.length > 0 ? (
+                {post && post.comments.length > 0 ? (
                   post.comments.map((comm) => (
                     <div key={comm._id} className='flex items-center'>
-                      <div className=' text-sm  p-2' key={comm._id}>
+                      <div className=' text-sm  p-2'>
                         <span className='font-semibold mx-2'>
                           {comm.user_name}
                         </span>{" "}
                         {comm.comment}
                       </div>
-                      <button className='text-xs text-blue-500 mx-2'>
-                        edit
-                      </button>
-                      <button className='text-xs text-red-500'>del</button>
+                      {userInfo && comm.user_id === userInfo._id && (
+                        <AiFillDelete
+                          className='text-sm ml-4 text-red-500 cursor-pointer '
+                          onClick={() => onDelete(comm._id)}
+                        />
+                      )}
                     </div>
                   ))
                 ) : (
