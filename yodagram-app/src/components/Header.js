@@ -24,7 +24,7 @@ const Header = () => {
   return (
     <header className='border-b fixed top-0 bg-white w-full z-20'>
       <nav className='flex justify-around items-center p-4'>
-        <Link to='/'>
+        <Link to='/' className='md:block hidden'>
           <img src='/yodagram.png' className='w-28' alt='logo' />
         </Link>
         {userInfo ? (

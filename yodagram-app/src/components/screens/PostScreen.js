@@ -120,9 +120,10 @@ const PostScreen = ({ match, history }) => {
       <img
         id='image'
         src={post && post.image}
-        className='md:w-8/12 md:h-8/12 w-10/12 h-10/12 md:left-40 left-10  mt-10 absolute hidden z-30 top-10'
+        style={{ right: "8%" }}
+        className='md:6/12 md:h-6/12 w-10/12 h-10/12    absolute hidden z-30 bottom-0 transform scale-50'
       />
-      <div className='container mx-auto  my-5'>
+      <div className='container mx-auto  my-5 '>
         {post && (
           <div
             className='w-8/12 border   bg-white mx-auto grid md:grid-cols-2 shadow '
@@ -132,7 +133,7 @@ const PostScreen = ({ match, history }) => {
               <img
                 onClick={showImage}
                 src={post && `${post.image}`}
-                className='md:w-500 md:h-500 cursor-pointer h-full md:w-full object-cover'
+                className=' md:h-500 cursor-pointer md:w-full object-cover'
                 style={{ maxHeight: "500px" }}
               />
               {post && userInfo && post.user === userInfo._id && (
