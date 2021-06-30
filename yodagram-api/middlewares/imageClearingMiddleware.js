@@ -5,10 +5,7 @@ import User from "../models/User.js";
 import Post from "../models/Post.js";
 
 export const imageClearingMiddleware = (req, res, next) => {
-  const dir = path.join(__dirname, "/uploads");
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
-  }
+
   fs.readdir(path.join(__dirname, "/uploads"), (err, files) => {
     if (files.length > 0) {
       files.forEach(async (file) => {
