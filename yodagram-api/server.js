@@ -8,7 +8,7 @@ import { errorHandler, notFound } from "./middlewares/errorMiddleware.js";
 import connectDB from "./config/db.js";
 dotenv.config();
 if(process.env.NODE_ENV==='production'){
-  process.env.MONGO_URI==='mongodb+srv://obei:obei0126038115@cluster0.s4lzv.mongodb.net/yodagram?retryWrites=true&w=majority'
+  process.env.MONGO_URI==='mongodb+srv://obei:P2YUmps60YxuuNYZ@cluster0.s4lzv.mongodb.net/yodagram?retryWrites=true&w=majority'
 }
 connectDB();
 const app = express();
