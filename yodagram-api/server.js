@@ -7,6 +7,9 @@ import postRoute from "./routes/postRoute.js";
 import { errorHandler, notFound } from "./middlewares/errorMiddleware.js";
 import connectDB from "./config/db.js";
 dotenv.config();
+if(process.env.NODE_ENV==='production'){
+  process.env.MONGO_URI==='mongodb+srv://obei:<password>@cluster0.s4lzv.mongodb.net/yodagram?retryWrites=true&w=majority'
+}
 connectDB();
 const app = express();
 const __dirname = path.resolve();
