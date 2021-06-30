@@ -111,46 +111,46 @@ const PostScreen = ({ match, history }) => {
     image.classList.add("hidden");
   };
   return (
-    <div className='w-full'>
+    <div className="w-full">
       <div
         onClick={closeImage}
-        id='imagebg'
-        className=' w-full bg-black cursor-pointer fixed opacity-70 hidden top-0 h-full z-20 '
+        id="imagebg"
+        className=" w-full bg-black cursor-pointer fixed opacity-70 hidden top-0 h-full z-20 "
       ></div>
       <img
-        id='image'
+        id="image"
         src={post && post.image}
         style={{ right: "8%" }}
-        className='md:6/12 md:h-6/12 w-10/12 h-10/12    absolute hidden z-30 bottom-0 transform scale-50'
+        className="md:6/12 md:h-6/12 w-10/12 h-10/12    absolute hidden z-30 bottom-0 transform scale-50"
       />
-      <div className='container mx-auto  my-5 '>
+      <div className="container mx-auto  my-5 ">
         {post && (
           <div
-            className='w-8/12 border   bg-white mx-auto grid md:grid-cols-2 shadow '
+            className="w-8/12 border   bg-white mx-auto grid md:grid-cols-2 shadow "
             style={{ maxHeight: "500px" }}
           >
-            <div className='relative'>
+            <div className="relative">
               <img
                 onClick={showImage}
                 src={post && `${post.image}`}
-                className=' md:h-500 cursor-pointer md:w-full object-cover'
+                className=" md:h-500 cursor-pointer md:w-full object-cover"
                 style={{ maxHeight: "500px" }}
               />
               {post && userInfo && post.user === userInfo._id && (
                 <BsThreeDots
                   onClick={handleClick}
-                  className='absolute top-2 left-3 cursor-pointer bg-white rounded-full w-10'
+                  className="absolute top-2 left-3 cursor-pointer bg-white rounded-full w-10"
                 />
               )}
               <ul
-                id='post'
-                className='border absolute shadow-lg z-20 rounded bg-white top-5   w-24  hidden '
+                id="post"
+                className="border absolute shadow-lg z-20 rounded bg-white top-5   w-24  hidden "
                 style={{ left: -20 }}
               >
                 {userInfo && userInfo._id === post.user && (
                   <li
                     onClick={handleDelete}
-                    className='p-3 hover:bg-gray-200 cursor-pointer flex items-center justify-evenly font-bold text-red-700'
+                    className="p-3 hover:bg-gray-200 cursor-pointer flex items-center justify-evenly font-bold text-red-700"
                   >
                     Delete
                   </li>
@@ -160,76 +160,78 @@ const PostScreen = ({ match, history }) => {
                   onClick={() =>
                     document.querySelector("#post").classList.add("hidden")
                   }
-                  className='p-3  hover:bg-gray-200 flex cursor-pointer items-center justify-evenly font-bold text-gray-700'
+                  className="p-3  hover:bg-gray-200 flex cursor-pointer items-center justify-evenly font-bold text-gray-700"
                 >
                   Cancel
                 </li>
               </ul>
             </div>
-            <div className='border  relative' style={{ maxHeight: "500px" }}>
-              <h1 className='   border-b my-2 p-2 absolute w-full'>
+            <div
+              className="border  relative h-full"
+              style={{ maxHeight: "500px" }}
+            >
+              <h1 className="   border-b my-2 p-2 absolute w-full">
                 <Link to={`/users/${post.user}`}>
                   <img
                     src={avatar && avatar.profilePic}
-                    alt=''
-                    className='w-8 h-8 rounded-full inline-block'
+                    alt=""
+                    className="w-8 h-8 rounded-full inline-block"
                   />
-                  <span className='text-sm font-semibold text-gray-600'>
+                  <span className="text-sm font-semibold text-gray-600">
                     {" "}
                     {avatar.username}
                   </span>{" "}
                 </Link>
-                <span className='text-xs text-gray-600'>{post.info}</span>
+                <span className="text-xs text-gray-600">{post.info}</span>
               </h1>
 
               <div
-                className='mt-20  overflow-y-scroll scrollbar'
-                style={{ maxHeight: "300px", height: "300px" }}
+                className="mt-20  overflow-y-scroll scrollbar "
+                style={{ minHeight: "200px" }}
               >
                 {post && post.comments.length > 0 ? (
                   post.comments.map((comm) => (
-                    <div key={comm._id} className='flex items-center'>
-                      <div className=' text-sm  p-2'>
-                        <span className='font-semibold mx-2'>
+                    <div key={comm._id} className="flex items-center">
+                      <div className=" text-sm  p-2">
+                        <span className="font-semibold mx-2">
                           {comm.user_name}
                         </span>{" "}
                         {comm.comment}
                       </div>
                       {userInfo && comm.user_id === userInfo._id && (
                         <AiFillDelete
-                          className='text-sm ml-4 text-red-500 cursor-pointer '
+                          className="text-sm ml-4 text-red-500 cursor-pointer "
                           onClick={() => onDelete(comm._id)}
                         />
                       )}
                     </div>
                   ))
                 ) : (
-                  <h1 className='text-center text-gray-300 font-bold'>
+                  <h1 className="text-center text-gray-300 font-bold">
                     no comments
                   </h1>
                 )}
               </div>
-
               <form
                 onSubmit={handleAddComment}
-                className='border-t p-2 flex justify-around absolute h-20 md:bottom-0 bottom-01 w-full'
+                className="border-t p-2 flex justify-around absolute bg-white h-20 md:bottom-0 bottom-01 w-full"
               >
                 <textarea
-                  type='text'
-                  placeholder='Add a comment'
-                  className='outline-none w-full  p-3 resize-none	'
+                  type="text"
+                  placeholder="Add a comment"
+                  className="outline-none w-full  p-3 resize-none	"
                   value={comment}
                   onChange={(e) => {
                     setComment(e.target.value);
                   }}
                 />
                 {comment.length > 0 ? (
-                  <button className='text-blue-400 font-bold p-3 outline-none '>
+                  <button className="text-blue-400 font-bold p-3 outline-none ">
                     Post
                   </button>
                 ) : (
                   <button
-                    className='text-blue-200 font-bold p-3 outline-none  '
+                    className="text-blue-200 font-bold p-3 outline-none  "
                     disabled
                   >
                     Post
