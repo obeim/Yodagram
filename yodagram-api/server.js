@@ -16,13 +16,13 @@ const __dirname = path.resolve();
 const port = process.env.PORT || 5000;
 
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+app.use("/", express.static(path.join(__dirname, "/yodagram-app",'build')));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.send(
-    "<h1>Yodagram api is running <h1/> <h2>Routes :</h2><h3>/api/users :</h3><h3>/api/upload :</h3><h3>/api/posts :</h3>"
-  );
+  res.sendFile('index.html');
 });
 app.use("/api/upload", uploadRoute);
 app.use("/api/users", usersRoute);
