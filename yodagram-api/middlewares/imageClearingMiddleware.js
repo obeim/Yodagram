@@ -7,7 +7,7 @@ import Post from "../models/Post.js";
 export const imageClearingMiddleware = (req, res, next) => {
 
   fs.readdir(path.join(__dirname, "/uploads"), (err, files) => {
-    if (files.length > 0) {
+    if (files && files.length > 0) {
       files.forEach(async (file) => {
         let filePath = "/uploads" + `/${file}`;
         const postImage = await Post.find({
