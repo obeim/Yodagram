@@ -20,7 +20,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("*", (req, res) => {
-  res.sendFile("index.html");
+  res.sendFile(
+    path.resolve(__dirname, "/yodagram-app", "/build", "index.html")
+  );
 });
 app.use("/api/upload", uploadRoute);
 app.use("/api/users", usersRoute);
