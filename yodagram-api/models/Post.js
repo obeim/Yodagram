@@ -37,7 +37,7 @@ const postSchema = mongoose.Schema(
 postSchema.methods.addComment = async function (comment) {
   await this.comments.push(comment);
   await this.save();
-  return this;
+  return this.comments.filter(cm=>cm.comment===comment.comment);
 };
 
 postSchema.methods.deleteComment = async function (id, user) {
