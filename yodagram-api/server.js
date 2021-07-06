@@ -19,10 +19,9 @@ app.use(express.static(path.join(__dirname, "/yodagram-app", "/build")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+let path = path.join(__dirname, "yodagram-app", "build", "index.html");
 app.get("*", (req, res) => {
-  res.sendFile(
-    path.resolve(__dirname, "/yodagram-app", "/build", "index.html")
-  );
+  res.sendFile(path.resolve(path));
 });
 app.use("/api/upload", uploadRoute);
 app.use("/api/users", usersRoute);
